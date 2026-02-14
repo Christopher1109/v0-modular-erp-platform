@@ -1,104 +1,63 @@
 "use client"
 
-import { useState } from "react"
 import {
-  Plus,
-  Search,
-  Download,
-  ArrowUpRight,
-  ArrowDownRight,
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
-  MoreHorizontal,
-  Eye,
-  Edit,
-  Trash2,
+  ArrowUpRight, ArrowDownRight, DollarSign, TrendingDown, TrendingUp, Percent,
+  Car, Wrench, ShoppingCart, Download, Search, Building2,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Progress } from "@/components/ui/progress"
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
+  LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts"
 
-const transactions = [
-  { id: "TRX-001", description: "Venta de servicios febrero", type: "Ingreso", category: "Ventas", amount: 45000, branch: "Central", responsible: "Carlos Admin", date: "12 Feb 2026", operation: "OP-2024-0146" },
-  { id: "TRX-002", description: "Pago de nomina quincenal", type: "Egreso", category: "Nomina", amount: 68000, branch: "Central", responsible: "Carlos Admin", date: "11 Feb 2026", operation: null },
-  { id: "TRX-003", description: "Compra de insumos almacen", type: "Egreso", category: "Insumos", amount: 12500, branch: "Norte", responsible: "Ana Martinez", date: "11 Feb 2026", operation: "OP-2024-0145" },
-  { id: "TRX-004", description: "Venta de productos mayoreo", type: "Ingreso", category: "Ventas", amount: 89000, branch: "Norte", responsible: "Luis Garcia", date: "10 Feb 2026", operation: "OP-2024-0146" },
-  { id: "TRX-005", description: "Mantenimiento de equipos", type: "Egreso", category: "Mantenimiento", amount: 7800, branch: "Sur", responsible: "Roberto Diaz", date: "10 Feb 2026", operation: "OP-2024-0147" },
-  { id: "TRX-006", description: "Merma detectada en producto", type: "Egreso", category: "Merma", amount: 3200, branch: "Sur", responsible: "Pedro Sanchez", date: "9 Feb 2026", operation: null },
-  { id: "TRX-007", description: "Venta de refacciones", type: "Ingreso", category: "Ventas", amount: 23500, branch: "Central", responsible: "Sofia Reyes", date: "9 Feb 2026", operation: null },
-  { id: "TRX-008", description: "Renta de local sucursal Sur", type: "Egreso", category: "Renta", amount: 15000, branch: "Sur", responsible: "Carlos Admin", date: "8 Feb 2026", operation: null },
+const financialOrders = [
+  { id: "OV-2026-0089", type: "Venta", description: "Toyota Camry 2025", branch: "Agencia Centro", cost: 420000, price: 485000, margin: 65000, marginPct: 13.4, payment: "Cobrado", date: "13 Feb 2026" },
+  { id: "OV-2026-0088", type: "Venta", description: "Mazda CX-5 2025 Signature", branch: "Agencia Centro", cost: 548000, price: 628000, margin: 80000, marginPct: 12.7, payment: "Cobrado", date: "12 Feb 2026" },
+  { id: "OS-2026-0231", type: "Servicio", description: "Alineacion y balanceo - RAV4", branch: "Agencia Centro", cost: 400, price: 1200, margin: 800, marginPct: 66.7, payment: "Cobrado", date: "12 Feb 2026" },
+  { id: "OS-2026-0234", type: "Servicio", description: "Servicio mayor 40k km - Civic", branch: "Agencia Norte", cost: 3200, price: 8500, margin: 5300, marginPct: 62.4, payment: "Pendiente", date: "13 Feb 2026" },
+  { id: "OS-2026-0233", type: "Servicio", description: "Frenos + balatas - Sentra", branch: "Taller Industrial", cost: 1800, price: 4200, margin: 2400, marginPct: 57.1, payment: "Pendiente", date: "13 Feb 2026" },
+  { id: "OV-2026-0087", type: "Venta", description: "Honda CR-V 2024 Seminuevo", branch: "Patio Seminuevos", cost: 380000, price: 445000, margin: 65000, marginPct: 14.6, payment: "Pendiente", date: "13 Feb 2026" },
+  { id: "PA-2026-0045", type: "Pedido", description: "Lote filtros + aceite", branch: "Taller Industrial", cost: 32400, price: 0, margin: 0, marginPct: 0, payment: "Pendiente", date: "12 Feb 2026" },
 ]
 
 const monthlyData = [
-  { month: "Ene", ingresos: 186000, egresos: 142000, utilidad: 44000 },
-  { month: "Feb", ingresos: 205000, egresos: 158000, utilidad: 47000 },
-  { month: "Mar", ingresos: 237000, egresos: 171000, utilidad: 66000 },
-  { month: "Abr", ingresos: 198000, egresos: 165000, utilidad: 33000 },
-  { month: "May", ingresos: 264000, egresos: 179000, utilidad: 85000 },
-  { month: "Jun", ingresos: 284500, egresos: 192000, utilidad: 92500 },
+  { month: "Sep", ingresos: 3800000, costos: 3200000, margen: 600000 },
+  { month: "Oct", ingresos: 4790000, costos: 4050000, margen: 740000 },
+  { month: "Nov", ingresos: 4305000, costos: 3620000, margen: 685000 },
+  { month: "Dic", ingresos: 5830000, costos: 4900000, margen: 930000 },
+  { month: "Ene", ingresos: 4780000, costos: 4020000, margen: 760000 },
+  { month: "Feb", ingresos: 5605000, costos: 4700000, margen: 905000 },
 ]
 
-const expensesByCategory = [
-  { category: "Nomina", amount: 68000 },
-  { category: "Insumos", amount: 12500 },
-  { category: "Mantenimiento", amount: 7800 },
-  { category: "Renta", amount: 15000 },
-  { category: "Merma", amount: 3200 },
+const marginByType = [
+  { tipo: "Vehiculos Nuevos", margen: 13.2 },
+  { tipo: "Seminuevos", margen: 14.6 },
+  { tipo: "Servicio Taller", margen: 58.4 },
+  { tipo: "Refacciones", margen: 42.1 },
+]
+
+const branchFinance = [
+  { branch: "Agencia Centro", ingresos: 2840000, costos: 2420000, margen: 420000, marginPct: 14.8 },
+  { branch: "Agencia Norte", ingresos: 1450000, costos: 1250000, margen: 200000, marginPct: 13.8 },
+  { branch: "Taller Industrial", ingresos: 380000, costos: 295000, margen: 85000, marginPct: 22.4 },
+  { branch: "Patio Seminuevos", ingresos: 560000, costos: 475000, margen: 85000, marginPct: 15.2 },
 ]
 
 export function FinanzasModule() {
-  const [showNewDialog, setShowNewDialog] = useState(false)
+  const cobrado = financialOrders.filter(o => o.payment === "Cobrado")
+  const totalIngresoCobrado = cobrado.reduce((acc, o) => acc + o.price, 0)
+  const totalCostoCobrado = cobrado.reduce((acc, o) => acc + o.cost, 0)
+  const totalMargenCobrado = totalIngresoCobrado - totalCostoCobrado
+  const marginPctCobrado = totalIngresoCobrado > 0 ? ((totalMargenCobrado / totalIngresoCobrado) * 100).toFixed(1) : "0"
 
-  const totalIngresos = transactions.filter(t => t.type === "Ingreso").reduce((acc, t) => acc + t.amount, 0)
-  const totalEgresos = transactions.filter(t => t.type === "Egreso").reduce((acc, t) => acc + t.amount, 0)
-  const balance = totalIngresos - totalEgresos
-  const mermas = transactions.filter(t => t.category === "Merma").reduce((acc, t) => acc + t.amount, 0)
+  const pendiente = financialOrders.filter(o => o.payment === "Pendiente" && o.price > 0)
+  const totalPendiente = pendiente.reduce((acc, o) => acc + o.price, 0)
 
   return (
     <div className="flex flex-col gap-6">
@@ -106,150 +65,108 @@ export function FinanzasModule() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Card>
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-success" />
-              <p className="text-xs text-muted-foreground">Ingresos</p>
-            </div>
-            <p className="text-2xl font-bold text-success mt-1">${totalIngresos.toLocaleString()}</p>
+            <div className="flex items-center gap-2"><ArrowUpRight className="h-4 w-4 text-success" /><p className="text-xs text-muted-foreground">Ingresos Cobrados</p></div>
+            <p className="text-2xl font-bold text-success mt-1">${(totalIngresoCobrado / 1000000).toFixed(2)}M</p>
+            <p className="text-[10px] text-muted-foreground">Solo ordenes con cobro confirmado</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <ArrowDownRight className="h-4 w-4 text-destructive" />
-              <p className="text-xs text-muted-foreground">Egresos</p>
-            </div>
-            <p className="text-2xl font-bold text-destructive mt-1">${totalEgresos.toLocaleString()}</p>
+            <div className="flex items-center gap-2"><ArrowDownRight className="h-4 w-4 text-destructive" /><p className="text-xs text-muted-foreground">Costos</p></div>
+            <p className="text-2xl font-bold text-destructive mt-1">${(totalCostoCobrado / 1000000).toFixed(2)}M</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-primary" />
-              <p className="text-xs text-muted-foreground">Balance</p>
-            </div>
-            <p className={`text-2xl font-bold mt-1 ${balance >= 0 ? "text-success" : "text-destructive"}`}>${balance.toLocaleString()}</p>
+            <div className="flex items-center gap-2"><Percent className="h-4 w-4 text-primary" /><p className="text-xs text-muted-foreground">Margen Neto</p></div>
+            <p className="text-2xl font-bold text-primary mt-1">{marginPctCobrado}%</p>
+            <p className="text-[10px] text-muted-foreground">${(totalMargenCobrado / 1000).toFixed(0)}k utilidad</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <TrendingDown className="h-4 w-4 text-warning" />
-              <p className="text-xs text-muted-foreground">Mermas</p>
-            </div>
-            <p className="text-2xl font-bold text-warning mt-1">${mermas.toLocaleString()}</p>
+            <div className="flex items-center gap-2"><DollarSign className="h-4 w-4 text-warning" /><p className="text-xs text-muted-foreground">Por Cobrar</p></div>
+            <p className="text-2xl font-bold text-warning mt-1">${(totalPendiente / 1000).toFixed(0)}k</p>
+            <p className="text-[10px] text-muted-foreground">{pendiente.length} ordenes pendientes</p>
           </CardContent>
         </Card>
       </div>
 
-      <Tabs defaultValue="transacciones" className="w-full">
+      <div className="bg-muted/50 border rounded-lg px-4 py-3">
+        <p className="text-xs text-muted-foreground"><span className="font-semibold text-foreground">Regla de reconocimiento:</span> Los ingresos se reconocen unicamente al momento del cobro. Las ordenes pendientes no se reflejan en ingresos hasta que su estado de pago cambie a &quot;Cobrado&quot;.</p>
+      </div>
+
+      <Tabs defaultValue="ordenes" className="w-full">
         <TabsList>
-          <TabsTrigger value="transacciones" className="text-xs">Transacciones</TabsTrigger>
-          <TabsTrigger value="analisis" className="text-xs">Analisis</TabsTrigger>
+          <TabsTrigger value="ordenes" className="text-xs">Por Orden</TabsTrigger>
+          <TabsTrigger value="sucursal" className="text-xs">Por Sucursal</TabsTrigger>
+          <TabsTrigger value="tendencia" className="text-xs">Tendencia</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="transacciones" className="mt-4">
+        <TabsContent value="ordenes" className="mt-4">
           <Card>
             <CardHeader className="pb-3">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <CardTitle className="text-sm font-semibold">Registro de Transacciones</CardTitle>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" className="h-8 text-xs">
-                    <Download className="mr-1.5 h-3 w-3" />
-                    Exportar
-                  </Button>
-                  <Button size="sm" className="h-8 text-xs" onClick={() => setShowNewDialog(true)}>
-                    <Plus className="mr-1.5 h-3 w-3" />
-                    Nueva Transaccion
-                  </Button>
-                </div>
+                <CardTitle className="text-sm font-semibold">Detalle Financiero por Orden</CardTitle>
+                <Button variant="outline" size="sm" className="h-8 text-xs"><Download className="mr-1.5 h-3 w-3" />Exportar</Button>
               </div>
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center mt-2">
                 <div className="relative flex-1">
                   <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-                  <Input placeholder="Buscar por ID, descripcion..." className="h-8 pl-8 text-xs" />
+                  <Input placeholder="Buscar por ID u orden..." className="h-8 pl-8 text-xs" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <Select defaultValue="all">
-                    <SelectTrigger className="h-8 w-28 text-xs">
-                      <SelectValue placeholder="Tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todos</SelectItem>
-                      <SelectItem value="ingreso">Ingresos</SelectItem>
-                      <SelectItem value="egreso">Egresos</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select defaultValue="all">
-                    <SelectTrigger className="h-8 w-36 text-xs">
-                      <SelectValue placeholder="Categoria" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todas</SelectItem>
-                      <SelectItem value="ventas">Ventas</SelectItem>
-                      <SelectItem value="nomina">Nomina</SelectItem>
-                      <SelectItem value="insumos">Insumos</SelectItem>
-                      <SelectItem value="mantenimiento">Mantenimiento</SelectItem>
-                      <SelectItem value="merma">Merma</SelectItem>
-                      <SelectItem value="renta">Renta</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Select defaultValue="all">
+                  <SelectTrigger className="h-8 w-32 text-xs"><SelectValue placeholder="Cobro" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos</SelectItem>
+                    <SelectItem value="cobrado">Cobrado</SelectItem>
+                    <SelectItem value="pendiente">Pendiente</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="text-xs">ID</TableHead>
-                    <TableHead className="text-xs">Descripcion</TableHead>
+                    <TableHead className="text-xs">Orden</TableHead>
                     <TableHead className="text-xs">Tipo</TableHead>
-                    <TableHead className="text-xs">Categoria</TableHead>
-                    <TableHead className="text-xs text-right">Monto</TableHead>
-                    <TableHead className="text-xs">Sucursal</TableHead>
-                    <TableHead className="text-xs">Operacion</TableHead>
-                    <TableHead className="text-xs text-right">Fecha</TableHead>
-                    <TableHead className="w-10"></TableHead>
+                    <TableHead className="text-xs">Descripcion</TableHead>
+                    <TableHead className="text-xs text-right">Costo</TableHead>
+                    <TableHead className="text-xs text-right">Precio</TableHead>
+                    <TableHead className="text-xs text-right">Margen</TableHead>
+                    <TableHead className="text-xs">Cobro</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {transactions.map((trx) => (
-                    <TableRow key={trx.id}>
-                      <TableCell className="text-xs font-mono font-medium">{trx.id}</TableCell>
-                      <TableCell className="text-xs font-medium text-foreground">{trx.description}</TableCell>
+                  {financialOrders.map((o) => (
+                    <TableRow key={o.id}>
+                      <TableCell className="text-xs font-mono font-medium text-primary">{o.id}</TableCell>
                       <TableCell>
-                        <Badge className={`text-[10px] ${trx.type === "Ingreso" ? "bg-success/10 text-success border-success/20 hover:bg-success/10" : "bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/10"}`}>
-                          {trx.type === "Ingreso" ? <ArrowUpRight className="h-2.5 w-2.5 mr-1" /> : <ArrowDownRight className="h-2.5 w-2.5 mr-1" />}
-                          {trx.type}
+                        {o.type === "Venta" && <Badge variant="outline" className="text-[10px] border-primary/30 text-primary"><Car className="h-2.5 w-2.5 mr-1" />{o.type}</Badge>}
+                        {o.type === "Servicio" && <Badge variant="outline" className="text-[10px] border-success/30 text-success"><Wrench className="h-2.5 w-2.5 mr-1" />{o.type}</Badge>}
+                        {o.type === "Pedido" && <Badge variant="outline" className="text-[10px] border-warning/30 text-warning"><ShoppingCart className="h-2.5 w-2.5 mr-1" />{o.type}</Badge>}
+                      </TableCell>
+                      <TableCell>
+                        <div>
+                          <p className="text-xs font-medium text-foreground">{o.description}</p>
+                          <p className="text-[10px] text-muted-foreground">{o.branch}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-xs text-right text-muted-foreground">${o.cost.toLocaleString()}</TableCell>
+                      <TableCell className="text-xs text-right font-medium">{o.price > 0 ? `$${o.price.toLocaleString()}` : "-"}</TableCell>
+                      <TableCell className="text-xs text-right">
+                        {o.margin > 0 ? (
+                          <div>
+                            <span className={`font-medium ${o.marginPct >= 15 ? "text-success" : "text-foreground"}`}>${o.margin.toLocaleString()}</span>
+                            <p className="text-[10px] text-muted-foreground">{o.marginPct}%</p>
+                          </div>
+                        ) : <span className="text-muted-foreground">-</span>}
+                      </TableCell>
+                      <TableCell>
+                        <Badge className={`text-[10px] ${o.payment === "Cobrado" ? "bg-success/10 text-success border-success/20 hover:bg-success/10" : "bg-warning/10 text-warning border-warning/20 hover:bg-warning/10"}`}>
+                          <DollarSign className="h-2.5 w-2.5 mr-0.5" />{o.payment}
                         </Badge>
-                      </TableCell>
-                      <TableCell className="text-xs text-muted-foreground">{trx.category}</TableCell>
-                      <TableCell className={`text-xs text-right font-medium ${trx.type === "Ingreso" ? "text-success" : "text-destructive"}`}>
-                        {trx.type === "Ingreso" ? "+" : "-"}${trx.amount.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-xs text-muted-foreground">{trx.branch}</TableCell>
-                      <TableCell className="text-xs">
-                        {trx.operation ? (
-                          <span className="font-mono text-primary">{trx.operation}</span>
-                        ) : (
-                          <span className="text-muted-foreground">-</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-xs text-muted-foreground text-right">{trx.date}</TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-7 w-7">
-                              <MoreHorizontal className="h-3.5 w-3.5" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem><Eye className="mr-2 h-3.5 w-3.5" />Ver Detalle</DropdownMenuItem>
-                            <DropdownMenuItem><Edit className="mr-2 h-3.5 w-3.5" />Editar</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 h-3.5 w-3.5" />Eliminar</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -259,151 +176,75 @@ export function FinanzasModule() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="analisis" className="mt-4">
+        <TabsContent value="sucursal" className="mt-4">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold">Tendencia Mensual</CardTitle>
-                <CardDescription className="text-xs">Ingresos, egresos y utilidad</CardDescription>
+                <CardTitle className="text-sm font-semibold">Resultado por Sucursal</CardTitle>
+                <CardDescription className="text-xs">Ingresos, costos y margen por ubicacion</CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={280}>
-                  <LineChart data={monthlyData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 18%, 89%)" />
-                    <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" />
-                    <YAxis tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "hsl(0, 0%, 100%)",
-                        border: "1px solid hsl(214, 18%, 89%)",
-                        borderRadius: "8px",
-                        fontSize: "12px",
-                      }}
-                      formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]}
-                    />
-                    <Line type="monotone" dataKey="ingresos" stroke="hsl(162, 63%, 41%)" strokeWidth={2} name="Ingresos" dot={false} />
-                    <Line type="monotone" dataKey="egresos" stroke="hsl(0, 72%, 51%)" strokeWidth={2} name="Egresos" dot={false} />
-                    <Line type="monotone" dataKey="utilidad" stroke="hsl(213, 72%, 42%)" strokeWidth={2} name="Utilidad" dot={false} />
-                  </LineChart>
-                </ResponsiveContainer>
+                <div className="flex flex-col gap-4">
+                  {branchFinance.map((b) => (
+                    <div key={b.branch} className="flex flex-col gap-2 p-3 rounded-lg border">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Building2 className="h-3 w-3" />{b.branch}</span>
+                        <Badge variant="outline" className={`text-[10px] ${b.marginPct >= 15 ? "border-success/30 text-success" : "border-foreground/20"}`}>{b.marginPct}% margen</Badge>
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        <div><p className="text-[10px] text-muted-foreground">Ingresos</p><p className="text-sm font-bold text-success">${(b.ingresos / 1000000).toFixed(2)}M</p></div>
+                        <div><p className="text-[10px] text-muted-foreground">Costos</p><p className="text-sm font-bold text-destructive">${(b.costos / 1000000).toFixed(2)}M</p></div>
+                        <div><p className="text-[10px] text-muted-foreground">Utilidad</p><p className="text-sm font-bold text-foreground">${(b.margen / 1000).toFixed(0)}k</p></div>
+                      </div>
+                      <Progress value={b.marginPct * 4} className="h-1.5" />
+                    </div>
+                  ))}
+                </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold">Egresos por Categoria</CardTitle>
-                <CardDescription className="text-xs">Distribucion del gasto</CardDescription>
+                <CardTitle className="text-sm font-semibold">Margen por Tipo de Operacion</CardTitle>
+                <CardDescription className="text-xs">Promedio de margen por linea de negocio</CardDescription>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={280}>
-                  <BarChart data={expensesByCategory} layout="vertical">
+                  <BarChart data={marginByType}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 18%, 89%)" />
-                    <XAxis type="number" tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-                    <YAxis type="category" dataKey="category" tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" width={100} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "hsl(0, 0%, 100%)",
-                        border: "1px solid hsl(214, 18%, 89%)",
-                        borderRadius: "8px",
-                        fontSize: "12px",
-                      }}
-                      formatter={(value: number) => [`$${value.toLocaleString()}`, "Monto"]}
-                    />
-                    <Bar dataKey="amount" fill="hsl(0, 72%, 51%)" radius={[0, 4, 4, 0]} />
+                    <XAxis dataKey="tipo" tick={{ fontSize: 10 }} stroke="hsl(215, 14%, 46%)" />
+                    <YAxis tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" tickFormatter={(v) => `${v}%`} />
+                    <Tooltip contentStyle={{ backgroundColor: "hsl(0, 0%, 100%)", border: "1px solid hsl(214, 18%, 89%)", borderRadius: "8px", fontSize: "12px" }} formatter={(v: number) => [`${v}%`, "Margen"]} />
+                    <Bar dataKey="margen" fill="hsl(213, 72%, 42%)" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
-      </Tabs>
 
-      {/* New Transaction Dialog */}
-      <Dialog open={showNewDialog} onOpenChange={setShowNewDialog}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-base">Nueva Transaccion</DialogTitle>
-            <DialogDescription className="text-xs">Registra un ingreso o egreso.</DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 py-2">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs">Tipo</Label>
-                <Select defaultValue="ingreso">
-                  <SelectTrigger className="h-9 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ingreso">Ingreso</SelectItem>
-                    <SelectItem value="egreso">Egreso</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs">Categoria</Label>
-                <Select>
-                  <SelectTrigger className="h-9 text-xs">
-                    <SelectValue placeholder="Seleccionar" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="ventas">Ventas</SelectItem>
-                    <SelectItem value="nomina">Nomina</SelectItem>
-                    <SelectItem value="insumos">Insumos</SelectItem>
-                    <SelectItem value="mantenimiento">Mantenimiento</SelectItem>
-                    <SelectItem value="merma">Merma</SelectItem>
-                    <SelectItem value="renta">Renta</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs">Descripcion</Label>
-              <Input placeholder="Descripcion de la transaccion" className="text-xs h-9" />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs">Monto</Label>
-                <Input type="number" placeholder="$0.00" className="text-xs h-9" />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs">Sucursal</Label>
-                <Select defaultValue="central">
-                  <SelectTrigger className="h-9 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="central">Central</SelectItem>
-                    <SelectItem value="norte">Norte</SelectItem>
-                    <SelectItem value="sur">Sur</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs">Operacion Relacionada (opcional)</Label>
-              <Select>
-                <SelectTrigger className="h-9 text-xs">
-                  <SelectValue placeholder="Sin operacion relacionada" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Sin operacion</SelectItem>
-                  <SelectItem value="op147">OP-2024-0147</SelectItem>
-                  <SelectItem value="op146">OP-2024-0146</SelectItem>
-                  <SelectItem value="op145">OP-2024-0145</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs">Notas</Label>
-              <Textarea placeholder="Notas adicionales..." className="text-xs min-h-[60px]" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" size="sm" className="text-xs" onClick={() => setShowNewDialog(false)}>Cancelar</Button>
-            <Button size="sm" className="text-xs" onClick={() => setShowNewDialog(false)}>Registrar</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        <TabsContent value="tendencia" className="mt-4">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-semibold">Tendencia Mensual</CardTitle>
+              <CardDescription className="text-xs">Ingresos cobrados, costos y margen - ultimos 6 meses</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={320}>
+                <LineChart data={monthlyData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 18%, 89%)" />
+                  <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" />
+                  <YAxis tick={{ fontSize: 11 }} stroke="hsl(215, 14%, 46%)" tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`} />
+                  <Tooltip contentStyle={{ backgroundColor: "hsl(0, 0%, 100%)", border: "1px solid hsl(214, 18%, 89%)", borderRadius: "8px", fontSize: "12px" }} formatter={(v: number) => [`$${v.toLocaleString()}`, undefined]} />
+                  <Line type="monotone" dataKey="ingresos" stroke="hsl(162, 63%, 41%)" strokeWidth={2} name="Ingresos" dot={false} />
+                  <Line type="monotone" dataKey="costos" stroke="hsl(0, 72%, 51%)" strokeWidth={2} name="Costos" dot={false} />
+                  <Line type="monotone" dataKey="margen" stroke="hsl(213, 72%, 42%)" strokeWidth={2.5} name="Margen" dot={{ r: 3 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

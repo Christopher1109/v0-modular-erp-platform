@@ -5,33 +5,43 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/erp/app-sidebar"
 import { TopHeader } from "@/components/erp/top-header"
 import { DashboardModule } from "@/components/erp/modules/dashboard"
-import { OperacionesModule } from "@/components/erp/modules/operaciones"
-import { InventarioModule } from "@/components/erp/modules/inventario"
+import { OrdenesModule } from "@/components/erp/modules/ordenes"
+import { VehiculosModule } from "@/components/erp/modules/vehiculos"
+import { RefaccionesModule } from "@/components/erp/modules/refacciones"
 import { FinanzasModule } from "@/components/erp/modules/finanzas"
 import { ReportesModule } from "@/components/erp/modules/reportes"
+import { ActividadModule } from "@/components/erp/modules/actividad"
 import { UsuariosModule } from "@/components/erp/modules/usuarios"
 import { ConfiguracionModule } from "@/components/erp/modules/configuracion"
 
 const moduleConfig: Record<string, { title: string; description: string }> = {
   dashboard: {
     title: "Dashboard",
-    description: "Vista general de la empresa",
+    description: "Vision general de la concesionaria",
   },
-  operaciones: {
-    title: "Operaciones",
-    description: "Registro y seguimiento de procesos operativos",
+  actividad: {
+    title: "Actividad Reciente",
+    description: "Registro automatico de eventos del sistema",
   },
-  inventario: {
-    title: "Inventario / Almacen",
-    description: "Control de entradas, salidas y stock",
+  ordenes: {
+    title: "Ordenes",
+    description: "Ventas de vehiculos, servicios de taller y pedidos de inventario",
+  },
+  vehiculos: {
+    title: "Inventario de Vehiculos",
+    description: "Stock de vehiculos nuevos y seminuevos por sucursal",
+  },
+  refacciones: {
+    title: "Refacciones y Almacen",
+    description: "Inventario de partes, autopartes y consumibles por sucursal",
   },
   finanzas: {
     title: "Finanzas",
-    description: "Registro de ingresos, egresos y costos",
+    description: "Ingresos, costos y margenes por operacion",
   },
   reportes: {
     title: "Reportes y KPIs",
-    description: "Indicadores clave y analisis",
+    description: "Indicadores clave y desempeno por sucursal",
   },
   usuarios: {
     title: "Usuarios y Accesos",
@@ -43,7 +53,7 @@ const moduleConfig: Record<string, { title: string; description: string }> = {
   },
   sucursales: {
     title: "Sucursales",
-    description: "Gestion de localizaciones de la empresa",
+    description: "Agencias, talleres y patios",
   },
   configuracion: {
     title: "Configuracion",
@@ -55,10 +65,14 @@ function getModuleComponent(moduleId: string) {
   switch (moduleId) {
     case "dashboard":
       return <DashboardModule />
-    case "operaciones":
-      return <OperacionesModule />
-    case "inventario":
-      return <InventarioModule />
+    case "actividad":
+      return <ActividadModule />
+    case "ordenes":
+      return <OrdenesModule />
+    case "vehiculos":
+      return <VehiculosModule />
+    case "refacciones":
+      return <RefaccionesModule />
     case "finanzas":
       return <FinanzasModule />
     case "reportes":

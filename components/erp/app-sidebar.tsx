@@ -3,7 +3,8 @@
 import {
   LayoutDashboard,
   Settings,
-  Package,
+  Car,
+  Wrench,
   DollarSign,
   BarChart3,
   Users,
@@ -13,6 +14,8 @@ import {
   ChevronDown,
   LogOut,
   Bell,
+  Warehouse,
+  Activity,
 } from "lucide-react"
 import {
   Sidebar,
@@ -39,11 +42,16 @@ import { Badge } from "@/components/ui/badge"
 
 const coreModules = [
   { title: "Dashboard", icon: LayoutDashboard, id: "dashboard" },
+  { title: "Actividad Reciente", icon: Activity, id: "actividad" },
 ]
 
-const functionalModules = [
-  { title: "Operaciones", icon: ClipboardList, id: "operaciones" },
-  { title: "Inventario", icon: Package, id: "inventario" },
+const operationalModules = [
+  { title: "Ordenes", icon: ClipboardList, id: "ordenes", badge: "12" },
+  { title: "Vehiculos", icon: Car, id: "vehiculos" },
+  { title: "Refacciones", icon: Wrench, id: "refacciones" },
+]
+
+const financeModules = [
   { title: "Finanzas", icon: DollarSign, id: "finanzas" },
   { title: "Reportes y KPIs", icon: BarChart3, id: "reportes" },
 ]
@@ -66,11 +74,11 @@ export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
       <SidebarHeader className="px-4 py-5">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-            <LayoutDashboard className="h-4 w-4" />
+            <Car className="h-4 w-4" />
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold text-sidebar-accent-foreground tracking-tight">NexusERP</span>
-            <span className="text-xs text-sidebar-foreground/60">Gestion Empresarial</span>
+            <span className="text-sm font-semibold text-sidebar-accent-foreground tracking-tight">AutoGestion</span>
+            <span className="text-xs text-sidebar-foreground/60">Concesionaria ERP</span>
           </div>
         </div>
       </SidebarHeader>
@@ -102,11 +110,38 @@ export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
 
         <SidebarGroup>
           <SidebarGroupLabel className="text-sidebar-foreground/50 text-[10px] uppercase tracking-widest font-semibold">
-            Modulos
+            Operaciones
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {functionalModules.map((item) => (
+              {operationalModules.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton
+                    isActive={activeModule === item.id}
+                    onClick={() => onModuleChange(item.id)}
+                    tooltip={item.title}
+                  >
+                    <item.icon className="h-4 w-4" />
+                    <span>{item.title}</span>
+                    {item.badge && (
+                      <Badge variant="secondary" className="ml-auto text-[9px] px-1.5 h-4 bg-sidebar-primary/20 text-sidebar-primary-foreground border-0 group-data-[collapsible=icon]:hidden">
+                        {item.badge}
+                      </Badge>
+                    )}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-sidebar-foreground/50 text-[10px] uppercase tracking-widest font-semibold">
+            Finanzas
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {financeModules.map((item) => (
                 <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton
                     isActive={activeModule === item.id}
@@ -155,12 +190,12 @@ export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
                 <SidebarMenuButton size="lg">
                   <Avatar className="h-7 w-7 rounded-md">
                     <AvatarFallback className="rounded-md bg-sidebar-primary text-sidebar-primary-foreground text-xs">
-                      CA
+                      RG
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col gap-0.5 leading-none">
-                    <span className="text-xs font-semibold text-sidebar-accent-foreground">Carlos Admin</span>
-                    <span className="text-[10px] text-sidebar-foreground/60">Super Administrador</span>
+                    <span className="text-xs font-semibold text-sidebar-accent-foreground">Ricardo Garza</span>
+                    <span className="text-[10px] text-sidebar-foreground/60">Gerente General</span>
                   </div>
                   <ChevronDown className="ml-auto h-3 w-3" />
                 </SidebarMenuButton>
@@ -174,7 +209,7 @@ export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
                 <DropdownMenuItem>
                   <Bell className="mr-2 h-4 w-4" />
                   Notificaciones
-                  <Badge variant="secondary" className="ml-auto text-[10px] px-1.5">3</Badge>
+                  <Badge variant="secondary" className="ml-auto text-[10px] px-1.5">5</Badge>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />

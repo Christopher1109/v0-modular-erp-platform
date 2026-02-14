@@ -44,20 +44,21 @@ export function TopHeader({ title, description }: TopHeaderProps) {
         <div className="relative hidden md:block">
           <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Buscar..."
-            className="h-8 w-56 pl-8 text-xs bg-background"
+            placeholder="Buscar ordenes, vehiculos, clientes..."
+            className="h-8 w-64 pl-8 text-xs bg-background"
           />
         </div>
 
-        <Select defaultValue="central">
-          <SelectTrigger className="h-8 w-40 text-xs hidden lg:flex">
+        <Select defaultValue="agencia-centro">
+          <SelectTrigger className="h-8 w-48 text-xs hidden lg:flex">
             <Building2 className="mr-1.5 h-3.5 w-3.5" />
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="central">Sucursal Central</SelectItem>
-            <SelectItem value="norte">Sucursal Norte</SelectItem>
-            <SelectItem value="sur">Sucursal Sur</SelectItem>
+            <SelectItem value="agencia-centro">Agencia Centro</SelectItem>
+            <SelectItem value="agencia-norte">Agencia Norte</SelectItem>
+            <SelectItem value="taller-industrial">Taller Industrial</SelectItem>
+            <SelectItem value="patio-seminuevos">Patio Seminuevos</SelectItem>
           </SelectContent>
         </Select>
 
@@ -66,25 +67,33 @@ export function TopHeader({ title, description }: TopHeaderProps) {
             <Button variant="ghost" size="icon" className="relative h-8 w-8">
               <Bell className="h-4 w-4" />
               <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-destructive-foreground">
-                3
+                5
               </span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-72">
+          <DropdownMenuContent align="end" className="w-80">
             <div className="px-3 py-2 border-b">
               <p className="text-sm font-semibold">Notificaciones</p>
             </div>
             <DropdownMenuItem className="flex flex-col items-start gap-1 py-2.5">
-              <span className="text-xs font-medium">Nuevo pedido registrado</span>
-              <span className="text-[10px] text-muted-foreground">Hace 5 minutos</span>
+              <span className="text-xs font-medium">Venta cerrada: Toyota Camry 2025 - OV-2026-0089</span>
+              <span className="text-[10px] text-muted-foreground">Hace 10 minutos - Agencia Centro</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start gap-1 py-2.5">
-              <span className="text-xs font-medium">Inventario bajo en Sucursal Norte</span>
-              <span className="text-[10px] text-muted-foreground">Hace 1 hora</span>
+              <span className="text-xs font-medium">Stock bajo: Filtro de aceite 5W-30 (4 unidades)</span>
+              <span className="text-[10px] text-muted-foreground">Hace 45 minutos - Taller Industrial</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start gap-1 py-2.5">
-              <span className="text-xs font-medium">Reporte mensual disponible</span>
-              <span className="text-[10px] text-muted-foreground">Hace 3 horas</span>
+              <span className="text-xs font-medium">Orden de servicio completada: OS-2026-0234</span>
+              <span className="text-[10px] text-muted-foreground">Hace 2 horas - Agencia Norte</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-col items-start gap-1 py-2.5">
+              <span className="text-xs font-medium">Pedido de refacciones recibido: PA-2026-0045</span>
+              <span className="text-[10px] text-muted-foreground">Hace 3 horas - Taller Industrial</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex flex-col items-start gap-1 py-2.5">
+              <span className="text-xs font-medium">Vehiculo detenido +60 dias: Honda CR-V 2024</span>
+              <span className="text-[10px] text-muted-foreground">Alerta automatica - Patio Seminuevos</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
