@@ -33,7 +33,7 @@ export function TopHeader({ title, description }: TopHeaderProps) {
 
       <div className="flex flex-1 items-center gap-4">
         <div>
-          <h1 className="text-sm font-semibold leading-none text-foreground">{title}</h1>
+          <h1 className="font-serif text-base font-semibold leading-none text-foreground tracking-tight">{title}</h1>
           {description && (
             <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
           )}

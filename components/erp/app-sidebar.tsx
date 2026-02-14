@@ -77,7 +77,7 @@ export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
             <Car className="h-4 w-4" />
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold text-sidebar-accent-foreground tracking-tight">AutoGestion</span>
+            <span className="font-serif text-base font-bold text-sidebar-accent-foreground tracking-tight">AutoGestion</span>
             <span className="text-xs text-sidebar-foreground/60">Concesionaria ERP</span>
           </div>
         </div>
