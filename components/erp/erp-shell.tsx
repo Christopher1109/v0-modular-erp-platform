@@ -4,6 +4,7 @@ import { useState } from "react"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/erp/app-sidebar"
 import { TopHeader } from "@/components/erp/top-header"
+import { ModuleCatalog } from "@/components/erp/module-catalog"
 import { DashboardModule } from "@/components/erp/modules/dashboard"
 import { OrdenesModule } from "@/components/erp/modules/ordenes"
 import { VehiculosModule } from "@/components/erp/modules/vehiculos"
@@ -89,15 +90,28 @@ function getModuleComponent(moduleId: string) {
 }
 
 export function ERPShell() {
-  const [activeModule, setActiveModule] = useState("dashboard")
+  const [activeModule, setActiveModule] = useState<string | null>(null)
+
+  // When no module is selected, show the catalog home
+  if (!activeModule) {
+    return <ModuleCatalog onModuleSelect={(id) => setActiveModule(id)} />
+  }
 
   const config = moduleConfig[activeModule] || moduleConfig.dashboard
 
   return (
     <SidebarProvider>
-      <AppSidebar activeModule={activeModule} onModuleChange={setActiveModule} />
+      <AppSidebar
+        activeModule={activeModule}
+        onModuleChange={setActiveModule}
+        onGoHome={() => setActiveModule(null)}
+      />
       <SidebarInset>
-        <TopHeader title={config.title} description={config.description} />
+        <TopHeader
+          title={config.title}
+          description={config.description}
+          onGoHome={() => setActiveModule(null)}
+        />
         <div className="flex-1 overflow-auto p-4 lg:p-6">
           {getModuleComponent(activeModule)}
         </div>
