@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Bell, Building2 } from "lucide-react"
+import { Search, Bell, Building2, Home } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
@@ -23,13 +23,21 @@ import {
 interface TopHeaderProps {
   title: string
   description?: string
+  onGoHome?: () => void
 }
 
-export function TopHeader({ title, description }: TopHeaderProps) {
+export function TopHeader({ title, description, onGoHome }: TopHeaderProps) {
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-card px-4">
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="h-5" />
+
+      {onGoHome && (
+        <Button variant="ghost" size="sm" onClick={onGoHome} className="gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+          <Home className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Inicio</span>
+        </Button>
+      )}
 
       <div className="flex flex-1 items-center gap-4">
         <div>

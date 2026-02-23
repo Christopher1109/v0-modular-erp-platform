@@ -66,13 +66,17 @@ const adminModules = [
 interface AppSidebarProps {
   activeModule: string
   onModuleChange: (moduleId: string) => void
+  onGoHome?: () => void
 }
 
-export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
+export function AppSidebar({ activeModule, onModuleChange, onGoHome }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="px-4 py-5">
-        <div className="flex items-center gap-3">
+        <button
+          onClick={onGoHome}
+          className="flex items-center gap-3 text-left transition-opacity hover:opacity-80"
+        >
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Car className="h-4 w-4" />
           </div>
@@ -80,7 +84,7 @@ export function AppSidebar({ activeModule, onModuleChange }: AppSidebarProps) {
             <span className="font-serif text-base font-bold text-sidebar-accent-foreground tracking-tight">AutoGestion</span>
             <span className="text-xs text-sidebar-foreground/60">Concesionaria ERP</span>
           </div>
-        </div>
+        </button>
       </SidebarHeader>
 
       <SidebarSeparator />
