@@ -6,8 +6,8 @@ const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", weight:
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", weight: ["400", "700"] })
 
 export const metadata: Metadata = {
-  title: "AutoGestion ERP - Plataforma Modular",
-  description: "Sistema ERP modular para concesionarias automotrices. Ordenes, inventario, finanzas y reportes.",
+  title: "NexusERP - Plataforma Modular de Gestion Empresarial",
+  description: "Sistema ERP modular, profesional y escalable. Inventario, finanzas, ventas, CRM, RRHH y mas.",
 }
 
 export const viewport: Viewport = {

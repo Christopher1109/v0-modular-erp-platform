@@ -5,13 +5,15 @@ import type { ModuleDef } from "@/modules"
 
 const moduleComponents: Record<string, React.ComponentType> = {
   dashboard: dynamic(() => import("./dashboard").then((m) => ({ default: m.DashboardModule })), { ssr: false }),
-  ordenes: dynamic(() => import("./ordenes").then((m) => ({ default: m.OrdenesModule })), { ssr: false }),
-  vehiculos: dynamic(() => import("./vehiculos").then((m) => ({ default: m.VehiculosModule })), { ssr: false }),
-  refacciones: dynamic(() => import("./refacciones").then((m) => ({ default: m.RefaccionesModule })), { ssr: false }),
+  inventario: dynamic(() => import("./inventario").then((m) => ({ default: m.InventarioModule })), { ssr: false }),
   finanzas: dynamic(() => import("./finanzas").then((m) => ({ default: m.FinanzasModule })), { ssr: false }),
+  compras: dynamic(() => import("./compras").then((m) => ({ default: m.ComprasModule })), { ssr: false }),
+  ventas: dynamic(() => import("./ventas").then((m) => ({ default: m.VentasModule })), { ssr: false }),
+  crm: dynamic(() => import("./crm").then((m) => ({ default: m.CRMModule })), { ssr: false }),
+  rrhh: dynamic(() => import("./rrhh").then((m) => ({ default: m.RRHHModule })), { ssr: false }),
+  proyectos: dynamic(() => import("./proyectos").then((m) => ({ default: m.ProyectosModule })), { ssr: false }),
+  marketing: dynamic(() => import("./marketing").then((m) => ({ default: m.MarketingModule })), { ssr: false }),
   reportes: dynamic(() => import("./reportes").then((m) => ({ default: m.ReportesModule })), { ssr: false }),
-  actividad: dynamic(() => import("./actividad").then((m) => ({ default: m.ActividadModule })), { ssr: false }),
-  usuarios: dynamic(() => import("./usuarios").then((m) => ({ default: m.UsuariosModule })), { ssr: false }),
   configuracion: dynamic(() => import("./configuracion").then((m) => ({ default: m.ConfiguracionModule })), { ssr: false }),
 }
 
@@ -24,20 +26,18 @@ export function GenericModule({ module }: GenericModuleProps) {
 
   if (!Component) {
     return (
-      <div className="flex flex-1 items-center justify-center p-8">
-        <div className="text-center space-y-2">
-          <p className="text-lg font-semibold text-foreground">Modulo no disponible</p>
-          <p className="text-sm text-muted-foreground">
-            El modulo &ldquo;{module.title}&rdquo; aun no ha sido implementado.
-          </p>
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${module.color} text-white mb-4`}>
+          <module.icon className="h-8 w-8" />
         </div>
+        <p className="text-lg font-semibold text-foreground">Modulo en desarrollo</p>
+        <p className="mt-1 text-sm text-muted-foreground max-w-md">
+          El modulo &ldquo;{module.title}&rdquo; esta siendo preparado.
+          Pronto estara disponible con datos de ejemplo y vista interactiva.
+        </p>
       </div>
     )
   }
 
-  return (
-    <div className="flex-1 overflow-auto">
-      <Component />
-    </div>
-  )
+  return <Component />
 }
