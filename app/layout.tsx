@@ -1,28 +1,26 @@
-import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Playfair_Display } from 'next/font/google'
+"use client"
 
-import './globals.css'
+// Este archivo modifica el layout global de la aplicación para que refleje
+// un producto ERP genérico en lugar de una concesionaria automotriz.  Se
+// ajustan el título y la descripción del metadata a una demo modular.
 
-const _dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
-const _playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
+import { DM_Sans, Playfair_Display } from "next/font/google"
+import "@/styles/globals.css"
 
-export const metadata: Metadata = {
-  title: 'AutoGestion ERP - Plataforma de Gestion para Concesionarias',
-  description: 'Sistema ERP modular para concesionarias automotrices. Ordenes, inventario de vehiculos y refacciones, finanzas y reportes.',
+const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"] })
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] })
+
+export const metadata = {
+  title: "Plataforma ERP Modular Demo",
+  description: "Una plataforma demostrativa para explorar diferentes módulos ERP.",
 }
 
-export const viewport: Viewport = {
-  themeColor: '#1a2332',
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="es" className="h-full">
+      <body className={`${dmSans.className} ${playfair.className} h-full bg-background text-foreground antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }
