@@ -1,6 +1,7 @@
 import {
-  LayoutDashboard, Package, DollarSign, ShoppingCart, TrendingUp, Users,
-  FolderKanban, Megaphone, BarChart3, Settings, type LucideIcon,
+  LayoutDashboard, Package, DollarSign, ShoppingCart, TrendingUp,
+  HeartHandshake, UserCog, FolderKanban, Megaphone, BarChart3, Settings,
+  type LucideIcon,
 } from "lucide-react"
 
 export interface ModuleDef {
@@ -85,7 +86,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Conecta con tus clientes",
     description: "Gestion de leads, oportunidades, historial de interacciones y automatizacion de seguimiento.",
     category: "gestion",
-    icon: Users,
+    icon: HeartHandshake,
     color: "from-pink-500 to-rose-400",
     features: ["Pipeline de leads", "Automatizacion de contacto", "Score de oportunidad"],
     component: "crm",
@@ -96,7 +97,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Gestiona tu equipo",
     description: "Directorio de empleados, control de asistencia, nomina y evaluaciones de desempeno.",
     category: "gestion",
-    icon: Users,
+    icon: UserCog,
     color: "from-indigo-500 to-blue-400",
     features: ["Directorio de personal", "Control de asistencia", "Evaluaciones"],
     component: "rrhh",
