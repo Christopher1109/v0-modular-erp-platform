@@ -119,6 +119,8 @@ export function ModuleCatalog({ onSelectModule }: ModuleCatalogProps) {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filteredModules.map((mod) => {
               const IconComponent = mod.icon
+              console.log("[v0] Module object:", mod)
+              console.log("[v0] Icon from module:", IconComponent, "Type:", typeof IconComponent)
               return (
                 <button
                   key={mod.id}
@@ -132,7 +134,7 @@ export function ModuleCatalog({ onSelectModule }: ModuleCatalogProps) {
                     {/* Icon + Title */}
                     <div className="flex items-start gap-4">
                       <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${mod.color} text-white shadow-sm`}>
-                        <IconComponent className="h-6 w-6" />
+                        {IconComponent ? <IconComponent className="h-6 w-6" /> : <Blocks className="h-6 w-6" />}
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-serif text-lg font-semibold tracking-tight text-foreground">
