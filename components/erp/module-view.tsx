@@ -2,6 +2,7 @@
 
 import { TopHeader } from "@/components/erp/top-header"
 import { GenericModule } from "@/components/erp/modules/generic-module"
+import { iconMap } from "@/modules"
 import type { ModuleDef } from "@/modules"
 
 interface ModuleViewProps {
@@ -10,6 +11,8 @@ interface ModuleViewProps {
 }
 
 export function ModuleView({ module, onGoHome }: ModuleViewProps) {
+  const IconComponent = iconMap[module.iconName]
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <TopHeader title={module.title} onGoHome={onGoHome} />
@@ -20,7 +23,7 @@ export function ModuleView({ module, onGoHome }: ModuleViewProps) {
         <div className="relative mx-auto max-w-7xl px-6 py-10 lg:py-12">
           <div className="flex items-start gap-5">
             <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${module.color} text-white shadow-lg`}>
-              <module.icon className="h-7 w-7" />
+              {IconComponent && <IconComponent className="h-7 w-7" />}
             </div>
             <div>
               <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground lg:text-3xl">

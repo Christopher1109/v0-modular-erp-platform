@@ -1,6 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import { iconMap } from "@/modules"
 import type { ModuleDef } from "@/modules"
 
 const moduleComponents: Record<string, React.ComponentType> = {
@@ -23,12 +24,13 @@ interface GenericModuleProps {
 
 export function GenericModule({ module }: GenericModuleProps) {
   const Component = moduleComponents[module.component]
+  const IconComponent = iconMap[module.iconName]
 
   if (!Component) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
         <div className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${module.color} text-white mb-4`}>
-          <module.icon className="h-8 w-8" />
+          {IconComponent && <IconComponent className="h-8 w-8" />}
         </div>
         <p className="text-lg font-semibold text-foreground">Modulo en desarrollo</p>
         <p className="mt-1 text-sm text-muted-foreground max-w-md">
