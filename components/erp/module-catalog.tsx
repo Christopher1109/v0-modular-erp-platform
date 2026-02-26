@@ -117,52 +117,55 @@ export function ModuleCatalog({ onSelectModule }: ModuleCatalogProps) {
           </div>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredModules.map((mod) => (
-              <button
-                key={mod.id}
-                onClick={() => onSelectModule(mod.id)}
-                className="group relative flex flex-col overflow-hidden rounded-xl border bg-card text-left transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 hover:border-primary/20"
-              >
-                {/* Gradient accent bar */}
-                <div className={`h-1.5 w-full bg-gradient-to-r ${mod.color}`} />
+            {filteredModules.map((mod) => {
+              const IconComponent = mod.icon
+              return (
+                <button
+                  key={mod.id}
+                  onClick={() => onSelectModule(mod.id)}
+                  className="group relative flex flex-col overflow-hidden rounded-xl border bg-card text-left transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 hover:border-primary/20"
+                >
+                  {/* Gradient accent bar */}
+                  <div className={`h-1.5 w-full bg-gradient-to-r ${mod.color}`} />
 
-                <div className="flex flex-1 flex-col p-6">
-                  {/* Icon + Title */}
-                  <div className="flex items-start gap-4">
-                    <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${mod.color} text-white shadow-sm`}>
-                      <mod.icon className="h-6 w-6" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-serif text-lg font-semibold tracking-tight text-foreground">
-                        {mod.title}
-                      </h3>
-                      <p className="text-xs text-muted-foreground mt-0.5">{mod.subtitle}</p>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                    {mod.description}
-                  </p>
-
-                  {/* Features */}
-                  <div className="mt-4 flex flex-col gap-2">
-                    {mod.features.map((feat) => (
-                      <div key={feat} className="flex items-center gap-2">
-                        <ChevronRight className="h-3 w-3 text-primary shrink-0" />
-                        <span className="text-xs text-foreground/80">{feat}</span>
+                  <div className="flex flex-1 flex-col p-6">
+                    {/* Icon + Title */}
+                    <div className="flex items-start gap-4">
+                      <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${mod.color} text-white shadow-sm`}>
+                        <IconComponent className="h-6 w-6" />
                       </div>
-                    ))}
-                  </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-serif text-lg font-semibold tracking-tight text-foreground">
+                          {mod.title}
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-0.5">{mod.subtitle}</p>
+                      </div>
+                    </div>
 
-                  {/* CTA */}
-                  <div className="mt-6 flex items-center gap-2 text-sm font-medium text-primary transition-all group-hover:gap-3">
-                    <span>Explorar modulo</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    {/* Description */}
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      {mod.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="mt-4 flex flex-col gap-2">
+                      {mod.features.map((feat) => (
+                        <div key={feat} className="flex items-center gap-2">
+                          <ChevronRight className="h-3 w-3 text-primary shrink-0" />
+                          <span className="text-xs text-foreground/80">{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA */}
+                    <div className="mt-6 flex items-center gap-2 text-sm font-medium text-primary transition-all group-hover:gap-3">
+                      <span>Explorar modulo</span>
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              )
+            })}
           </div>
         )}
       </section>
