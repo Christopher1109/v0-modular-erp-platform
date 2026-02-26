@@ -10,11 +10,25 @@ export interface ModuleDef {
   subtitle: string
   description: string
   category: string
-  icon: LucideIcon
+  iconName: keyof typeof iconMap
   color: string
   features: string[]
   component: string
 }
+
+export const iconMap = {
+  "LayoutDashboard": LayoutDashboard,
+  "Package": Package,
+  "DollarSign": DollarSign,
+  "ShoppingCart": ShoppingCart,
+  "TrendingUp": TrendingUp,
+  "HeartHandshake": HeartHandshake,
+  "UserCog": UserCog,
+  "FolderKanban": FolderKanban,
+  "Megaphone": Megaphone,
+  "BarChart3": BarChart3,
+  "Settings": Settings,
+} as const
 
 export const categories = [
   { key: "core", label: "Core" },
@@ -31,7 +45,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Vista ejecutiva en tiempo real",
     description: "Panel central con los KPIs mas importantes de tu negocio, tendencias y alertas en un solo lugar.",
     category: "core",
-    icon: LayoutDashboard,
+    iconName: "LayoutDashboard",
     color: "from-blue-500 to-cyan-400",
     features: ["KPIs en tiempo real", "Graficas de tendencia", "Alertas inteligentes"],
     component: "dashboard",
@@ -42,7 +56,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Gestiona stock en tiempo real",
     description: "Control completo de productos, materias primas y almacenes con trazabilidad por lote y ubicacion.",
     category: "operaciones",
-    icon: Package,
+    iconName: "Package",
     color: "from-amber-500 to-orange-400",
     features: ["Stock multi-almacen", "Alertas de reorden", "Movimientos automaticos"],
     component: "inventario",
@@ -53,7 +67,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Controla ingresos y egresos",
     description: "Seguimiento de flujo de caja, cuentas por cobrar/pagar, margenes y proyecciones financieras.",
     category: "operaciones",
-    icon: DollarSign,
+    iconName: "DollarSign",
     color: "from-emerald-500 to-teal-400",
     features: ["Flujo de caja", "Cuentas por cobrar", "Margenes por operacion"],
     component: "finanzas",
@@ -64,7 +78,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Optimiza tus adquisiciones",
     description: "Gestion de proveedores, ordenes de compra, recepcion de mercancia y evaluacion de costos.",
     category: "operaciones",
-    icon: ShoppingCart,
+    iconName: "ShoppingCart",
     color: "from-violet-500 to-purple-400",
     features: ["Ordenes de compra", "Evaluacion proveedores", "Recepcion automatica"],
     component: "compras",
@@ -75,7 +89,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Acelera tu ciclo comercial",
     description: "Pipeline de ventas, cotizaciones, ordenes y seguimiento de comisiones por vendedor y equipo.",
     category: "operaciones",
-    icon: TrendingUp,
+    iconName: "TrendingUp",
     color: "from-sky-500 to-blue-400",
     features: ["Pipeline visual", "Cotizaciones rapidas", "Comisiones automaticas"],
     component: "ventas",
@@ -86,7 +100,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Conecta con tus clientes",
     description: "Gestion de leads, oportunidades, historial de interacciones y automatizacion de seguimiento.",
     category: "gestion",
-    icon: HeartHandshake,
+    iconName: "HeartHandshake",
     color: "from-pink-500 to-rose-400",
     features: ["Pipeline de leads", "Automatizacion de contacto", "Score de oportunidad"],
     component: "crm",
@@ -97,7 +111,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Gestiona tu equipo",
     description: "Directorio de empleados, control de asistencia, nomina y evaluaciones de desempeno.",
     category: "gestion",
-    icon: UserCog,
+    iconName: "UserCog",
     color: "from-indigo-500 to-blue-400",
     features: ["Directorio de personal", "Control de asistencia", "Evaluaciones"],
     component: "rrhh",
@@ -108,7 +122,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Organiza y ejecuta",
     description: "Tableros kanban, asignacion de tareas, cronogramas y seguimiento de avance por proyecto.",
     category: "gestion",
-    icon: FolderKanban,
+    iconName: "FolderKanban",
     color: "from-cyan-500 to-teal-400",
     features: ["Tableros kanban", "Cronogramas", "Seguimiento de avance"],
     component: "proyectos",
@@ -119,7 +133,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Impulsa tu marca",
     description: "Campanas multicanal, segmentacion de audiencia, metricas de conversion y ROI por campana.",
     category: "inteligencia",
-    icon: Megaphone,
+    iconName: "Megaphone",
     color: "from-fuchsia-500 to-pink-400",
     features: ["Campanas multicanal", "Segmentacion", "ROI por campana"],
     component: "marketing",
@@ -130,7 +144,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Datos que impulsan decisiones",
     description: "Dashboards personalizados, reportes automaticos, analisis predictivo y exportacion avanzada.",
     category: "inteligencia",
-    icon: BarChart3,
+    iconName: "BarChart3",
     color: "from-blue-600 to-indigo-400",
     features: ["Dashboards custom", "Reportes automaticos", "Analisis predictivo"],
     component: "reportes",
@@ -141,7 +155,7 @@ export const modules: ModuleDef[] = [
     subtitle: "Personaliza tu plataforma",
     description: "Usuarios, roles, permisos, datos de empresa, sucursales y preferencias del sistema.",
     category: "admin",
-    icon: Settings,
+    iconName: "Settings",
     color: "from-slate-500 to-gray-400",
     features: ["Roles y permisos", "Multi-sucursal", "Notificaciones"],
     component: "configuracion",
